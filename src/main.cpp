@@ -13,6 +13,10 @@
 #include <SimpleDHT.h>
 #include <SPI.h>
 #include "Ucglib.h"
+
+#define LCDPWMLED 16
+#define LCDCS     5
+#define DHTDATA   4
  
 unsigned long mil;
 uint8_t pinDHT11 = 6, dimm = 127;
@@ -96,8 +100,8 @@ void showBattery (int lvl) {
 }
  
 void setup() {
-  pinMode(5, OUTPUT);
-  pinMode(10, OUTPUT);
+  pinMode(LCDPWMLED, OUTPUT);
+  pinMode(DHTDATA, OUTPUT);
   digitalWrite(5, HIGH);
   Serial.begin(115200);
   Serial.println("Start");
@@ -109,10 +113,10 @@ void setup() {
   ucg.setFont(ucg_font_ncenR10_tr);
   //ucg.setColor(0, 255, 0);
   // ucg.setColor(1, 255, 255,255);
-  analogWrite(10, 15); delay(150);
-  analogWrite(10, 31); delay(150);
-  analogWrite(10, 63); delay(150);
-  analogWrite(10, 127); delay(150);
+  analogWrite(LCDPWMLED, 15); delay(150);
+  analogWrite(LCDPWMLED, 31); delay(150);
+  analogWrite(LCDPWMLED, 63); delay(150);
+  analogWrite(LCDPWMLED, 127); delay(150);
   showBattery(0); delay(500);
   showBattery(1); delay(500);
   showBattery(2); delay(500);
