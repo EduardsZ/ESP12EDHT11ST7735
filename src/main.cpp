@@ -14,9 +14,9 @@
 #include <SPI.h>
 #include "Ucglib.h"
 
-#define LCDPWMLED 16
+#define LCDPWMLED 5
 #define LCDCS     5
-#define DHTDATA   4
+#define DHTDATA   16
  
 unsigned long mil;
 uint8_t pinDHT11 = 6, dimm = 127;
@@ -24,6 +24,7 @@ uint8_t bgcol[3] = {0,10,10}, bncol[3] = {28,208,255}, btcl1[3] = {0,127,10}, bt
 char boneSign = '*';
 byte temperature = 0,  humidity = 0 , oldtemp= 0, oldhum = 0;
 SimpleDHT11 dht11(pinDHT11);
+
 // Ucglib_ST7735_18x128x160_SWSPI ucg(/*sclk=*/ 0, /*data=*/ 4, /*cd=*/ 10, /*cs=*/ 2, /*reset=*/ 5);
 Ucglib_ST7735_18x128x160_HWSPI ucg(/*cd=*/ 9, /*cs=*/ 8, /*reset=*/ 7);
  
@@ -100,9 +101,8 @@ void showBattery (int lvl) {
 }
  
 void setup() {
+  SimpleDHT11 dht11(DHTDATA);
   pinMode(LCDPWMLED, OUTPUT);
-  pinMode(DHTDATA, OUTPUT);
-  digitalWrite(5, HIGH);
   Serial.begin(115200);
   Serial.println("Start");
   ucg.begin(UCG_FONT_MODE_TRANSPARENT);
